@@ -24,7 +24,7 @@ func isUniqueNoExternalDataStructure(input string) bool {
 	return true
 }
 
-func TestAlgorithm(f func(string) bool) {
+func testUnique(f func(string) bool) {
 	var tests = []struct {
 		input string
 		want  bool
@@ -44,7 +44,7 @@ func TestAlgorithm(f func(string) bool) {
 
 func main() {
 	fmt.Println("Is unique:")
-	TestAlgorithm(isUnique)
+	testUnique(isUnique)
 	fmt.Println("\nIs unique with no external ds:")
-	TestAlgorithm(isUniqueNoExternalDataStructure)
+	testUnique(isUniqueNoExternalDataStructure)
 }
