@@ -3,12 +3,12 @@ package main
 import "fmt"
 
 func isUnique(input string) bool {
-	hash := make(map[int32]bool)
+	memory := make(map[int32]bool)
 	for _, ascii := range input {
-		if hash[ascii] {
+		if memory[ascii] {
 			return false
 		}
-		hash[ascii] = true
+		memory[ascii] = true
 	}
 	return true
 }

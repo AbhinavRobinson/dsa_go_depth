@@ -25,6 +25,23 @@ func checkPermutation(source string, compare string) bool {
 	return true
 }
 
+func checkPermutationCounting(source string, compare string) bool {
+	if len(source) != len(compare) {
+		return false
+	}
+	memory := make(map[int32]uint)
+	for _, ch := range source {
+		memory[ch]++
+	}
+	for _, ch := range compare {
+		if memory[ch] == 0 {
+			return false
+		}
+		memory[ch]--
+	}
+	return true
+}
+
 func testPermutation(f func(string, string) bool) {
 	var tests = []struct {
 		input  string
@@ -48,5 +65,8 @@ func testPermutation(f func(string, string) bool) {
 }
 
 func main() {
+	fmt.Println("Check permutation: O(N^2)")
 	testPermutation(checkPermutation)
+	fmt.Println("\nCheck permutation with only counting: O(N)")
+	testPermutation(checkPermutationCounting)
 }
