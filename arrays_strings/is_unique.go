@@ -15,11 +15,23 @@ func isUnique(input string) bool {
 
 func isUniqueNoExternalDataStructure(input string) bool {
 	for index := range input {
-		for _, compare := range input[:index] {
+		for compare := range input[:index] {
 			if input[compare] == input[index] {
 				return false
 			}
 		}
+	}
+	return true
+}
+
+func isUniqueBitwise(input string) bool {
+	checker := 0
+	for index := range input {
+		value := input[index] - 'a'
+		if (checker & (1 << value)) > 0 {
+			return false
+		}
+		checker |= 1 << value
 	}
 	return true
 }
@@ -47,4 +59,6 @@ func main() {
 	testUnique(isUnique)
 	fmt.Println("\nIs unique with no external ds:")
 	testUnique(isUniqueNoExternalDataStructure)
+	fmt.Println("\nIs unique with bitwise:")
+	testUnique(isUniqueBitwise)
 }
