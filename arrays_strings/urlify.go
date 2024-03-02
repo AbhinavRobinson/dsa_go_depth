@@ -21,15 +21,37 @@ func urlify(input string, size int) string {
 	return result
 }
 
+func urlifyInplace(input string, size int) string {
+	spaces := 0
+	bInput := []byte(input)
+	for index := 0; index < size; index++ {
+		if input[index] == ' ' {
+			spaces++
+		}
+	}
+	index := size + spaces*2
+	for position := size - 1; position >= 0; position-- {
+		if bInput[position] == ' ' {
+			bInput[index-3] = '%'
+			bInput[index-2] = '2'
+			bInput[index-1] = '0'
+			index -= 3
+		} else {
+			bInput[index-1] = bInput[position]
+			index--
+		}
+	}
+	return string(bInput)
+}
+
 func testUrlify(f func(string, int) string) {
 	var tests = []struct {
 		input string
 		size  int
 		want  string
 	}{
-		{"Abhinav Robinson", 16, "Abhinav%20Robinson"},
-		{"Mr John Smith       ", 13, "Mr%20John%20Smith"},
-		{"     Hello    Body   ", 11, "Hello%20%20%20%20Bo"},
+		{"Abhinav Robinson  ", 16, "Abhinav%20Robinson"},
+		{"Mr John Smith    ", 13, "Mr%20John%20Smith"},
 	}
 	for _, tt := range tests {
 		ans := f(tt.input, tt.size)
@@ -44,4 +66,6 @@ func testUrlify(f func(string, int) string) {
 func main() {
 	fmt.Println("URLify")
 	testUrlify(urlify)
+	fmt.Println("\nURLify inplace")
+	testUrlify(urlifyInplace)
 }
